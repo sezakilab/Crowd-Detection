@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BluetoothDiscover</string>
+    <string name="map_key">pk.eyJ1IjoibzBtYXh3ZWxsMG8iLCJhIjoiY2pudmh1Z3drMGZzeTNrcnd1OWhqc2o5MSJ9.bKICAZaDkuSUzMPkKbyEQg</string>
+    <string name="server_url">http://192.168.0.10:5000</string>
+</resources>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+	<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+</script>
+    <title>Get Data</title>
+</head>
+<body>
+<p id = "p1"></p>
+<script>
+   		setInterval(getData, 1000);
+  		function getData() {
+   			$.ajax({
+      			type: "get",
+      			url: "/data",
+      			dataType: "json",
+      			success : function(data){
+      							//document.getElementById("p1").innerHTML = data;
+							str=JSON.stringify(data)
+							document.getElementById("p1").innerHTML = str;
+      					}
+    		});
+		}
+
+	</script>
+</body>
+</html>
