@@ -42,6 +42,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
 
+
+
         initViews();
         initObjects();
 
@@ -67,7 +69,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private void initObjects() {
         inputValidation = new InputValidation(activity);
         //HttpRequest
-        httpRequest = new HttpRequest(this);
+        Intent intent = getIntent();
+        String ipAddress = intent.getStringExtra("ipAddress");
+        httpRequest = new HttpRequest(this, ipAddress);
         user = new User();
 
     }
