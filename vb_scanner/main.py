@@ -35,41 +35,41 @@ class VirtualDevice(threading.Thread):
         scanner_locs = df_scanner_loc[df_scanner_loc['username'].isin([self.user])]
         bt_devices   = df_bt_device[df_bt_device['username'].isin([self.user])]
 
-        for index, row in scanner_locs.iterrows():
-            if self.stop_event.is_set():
-                break
-            devices = []
-            discovered_bt_devices = bt_devices[bt_devices.user_to_device_id == index]
-            
-            extra_rssi = 0
-            extra_lat  = 0
-            extra_long = 0
-            if self.uid > len(self.users):
-                extra_rssi = random.uniform(-5,5.0)
-                extra_lat  = random.uniform(-0.0001,0.0001)
-                extra_long = random.uniform(-0.0001,0.0001)
-            
-            for i, d in discovered_bt_devices.iterrows():
+        while not self.stop_event.is_set():
+            print("[Info] Start a new loop")
+            for index, row in scanner_locs.iterrows():
+                devices = []
+                discovered_bt_devices = bt_devices[bt_devices.user_to_device_id == index]
+                
+                extra_rssi = 0
+                extra_lat  = 0
+                extra_long = 0
+                if self.uid > len(self.users):
+                    extra_rssi = random.uniform(-5,5.0)
+                    extra_lat  = random.uniform(-0.0001,0.0001)
+                    extra_long = random.uniform(-0.0001,0.0001)
+                
+                for i, d in discovered_bt_devices.iterrows():
+                    date = current_datetime()
+                    if self.live == False:
+                        date = d.date
+                    devices.append({'address':d.mac_address,
+                                    'rssi'   :d.rssi + extra_rssi,
+                                    'date'   :date,
+                                    'lat'    :d.lat  + extra_lat,
+                                    'long'   :d.long + extra_long})
                 date = current_datetime()
                 if self.live == False:
-                    date = d.date
-                devices.append({'address':d.mac_address,
-                                'rssi'   :d.rssi + extra_rssi,
-                                'date'   :date,
-                                'lat'    :d.lat  + extra_lat,
-                                'long'   :d.long + extra_long})
-            date = current_datetime()
-            if self.live == False:
-                date = row.date
-            obj = {'date'    :date,
-                   'username':row.username, 
-                   'lat'     :row.lat  + extra_lat,
-                   'long'    :row.long + extra_long, 
-                   'device'  :devices}
-            json_data = json.dumps(obj).encode("utf-8")
-            response = requests.post(self.url, data=json_data, headers=headers)
-            time.sleep(self.interval)
-            print("upload VD-"+str(self.uid), date, response.status_code)
+                    date = row.date
+                obj = {'date'    :date,
+                       'username':row.username,
+                       'lat'     :row.lat  + extra_lat,
+                       'long'    :row.long + extra_long,
+                       'device'  :devices}
+                json_data = json.dumps(obj).encode("utf-8")
+                response = requests.post(self.url, data=json_data, headers=headers)
+                time.sleep(self.interval)
+                print("upload VD-"+str(self.uid), date, response.status_code)
 
 if __name__ == '__main__':
     args = sys.argv
