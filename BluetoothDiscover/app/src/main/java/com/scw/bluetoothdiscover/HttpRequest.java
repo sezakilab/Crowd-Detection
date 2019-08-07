@@ -5,8 +5,6 @@ import android.location.Location;
 import android.util.Log;
 
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,12 +31,9 @@ public class HttpRequest {
     String serverResponse = "";
     String time = "2019-01-25 12:05:00";
 
-    public HttpRequest(Context context) {
-        this.mUrl = context.getString(R.string.server_url);
-        //this.mUrl = context.getString(R.string.server_test);
-        //this.mUrl = context.getString(R.string.server_nowifi);
+    public HttpRequest(Context context, String url) {
+        this.mUrl = url;
         client = new OkHttpClient.Builder()
-                .addNetworkInterceptor(new StethoInterceptor())
                 .build();
 
     }

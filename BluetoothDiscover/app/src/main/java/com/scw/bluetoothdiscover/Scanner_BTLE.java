@@ -22,7 +22,7 @@ public class Scanner_BTLE {
     private HashMap<String, List<Integer>> mBTDevicesHashMap;
     private boolean mScanning = false;
 
-
+    // Minimum acceptable value
     private int signalStrength;
 
 
@@ -71,7 +71,6 @@ public class Scanner_BTLE {
             }
             int aver = sum / value.size();
             resultList.put(key, aver);
-            System.out.println("Test  result " + key + " " + value + " " + aver);
 
         }
         return resultList;
@@ -79,6 +78,7 @@ public class Scanner_BTLE {
     }
 
 
+    // Callback reporting an LE device found during a device scan initiated by the startLeScan function.
     private BluetoothAdapter.LeScanCallback mLeScanCallback =
             new BluetoothAdapter.LeScanCallback() {
                 @Override
@@ -86,14 +86,7 @@ public class Scanner_BTLE {
                     final int new_rssi = rssi;
                     if (rssi > signalStrength) {
                         addDevice(device, new_rssi);
-                        /*
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                addDevice(device, new_rssi);
-                            }
-                        });
-                        */
+
                     }
                 }
             };
@@ -101,10 +94,7 @@ public class Scanner_BTLE {
     private void addDevice(BluetoothDevice device, int new_rssi) {
 
         String address = device.getAddress();
-
         if (!mBTDevicesHashMap.containsKey(address)) {
-            //BluetoothDevice btle_device = new BluetoothDevice(device);
-            //btle_device.setRSSI(new_rssi);
             List<Integer> putlist = new ArrayList<>();
             putlist.add(new_rssi);
             mBTDevicesHashMap.put(address, putlist);

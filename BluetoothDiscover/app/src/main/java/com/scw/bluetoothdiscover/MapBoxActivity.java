@@ -128,7 +128,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     //test
     private static Scanner_BTLE scanner_btle; //test
     private static Handler handler;//test
-    private static Runnable testRunnable;//test
+    private static Runnable blescanRunnable;//test
     private static JSONArray deviceArray = new JSONArray();//test
 
 
@@ -189,17 +189,22 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
         }
 
 
-        //test
-        httpRequest = new HttpRequest(this);
+        // Setting http
+        String ipAddress = intent.getStringExtra("ipAddress");
+        System.out.println("Test: " + ipAddress);
+        httpRequest = new HttpRequest(this, ipAddress);
         scanner_btle = new Scanner_BTLE(this, -100);
 
         //upload handler
         handler = new Handler();
-        testRunnable = new Runnable() {
+        blescanRunnable = new Runnable() {
             @Override
             public void run() {
                 deviceJSON(scanner_btle.result());
                 scanner_btle.clean();
+                System.out.println("Test: " + deviceArray);
+                handler.postDelayed(this, 5000);
+                /*
                 Thread testThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -215,6 +220,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                         InterruptedException e) {
                     e.printStackTrace();
                 }
+                */
 
             }
         };
@@ -355,10 +361,10 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                         //stop(0.5f, rgb(0, 255, 42)), // lime
                         //stop(0.7f, rgb(255, 252, 0)), // yellow
                         //stop(1f, rgb(255, 30, 0)) // red
-                        stop(0.25f, rgb(255,0,0)),
-                        stop(0.5f, rgb(35,206,250)),
-                        stop(0.75f, rgb(0,191,255)),// deepsky blue
-                        stop(1f, rgb(0,0,255))
+                        stop(0.25f, rgb(255, 0, 0)),
+                        stop(0.5f, rgb(35, 206, 250)),
+                        stop(0.75f, rgb(0, 191, 255)),// deepsky blue
+                        stop(1f, rgb(0, 0, 255))
                 ))));
         /*loadedMapStyle.addLayer(new LineLayer("linelayer", "line-source").withProperties(
                 //PropertyFactory.lineDasharray(new Float[]{0.01f, 2f}),
@@ -701,30 +707,33 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 double a = userLocation.getLastKnownLocation().getLatitude();
                 double b = userLocation.getLastKnownLocation().getLongitude();
                 Toast.makeText(getApplicationContext(), "test1: " + a + " " + b, Toast.LENGTH_LONG).show();*/
-/*
-                if (!mBTLeScanner.isScanning() && !isStart) {
-                    isStart = true;
+
+                /*
+                if (!scanner_btle.isScanning()) {
                     startButton.setText("Stop");
                     Utils.toast(getApplicationContext(), "Start");
-                    startScan();
+                    scanner_btle.start();
+                    handler.postDelayed(blescanRunnable, 5000);
                 } else {
-                    isStart = false;
                     startButton.setText("Start");
                     Utils.toast(getApplicationContext(), "Stop");
-                    stopScan();
+                    scanner_btle.stop();
+                    handler.removeCallbacks(blescanRunnable);
                 }
                 */
-//                scanner_btle.start();
-//                handler.postDelayed(testRunnable, 5000);
+
+
+                // Replay test
                 updateFun();
                 break;
             case R.id.logout:
 
 
-//                finish();
-//                Intent intent = new Intent(MapBoxActivity.this, Login.class);
-//                startActivity(intent);
                 updatehandler.removeCallbacks(updaterunnable);
+                finish();
+                //Intent intent = new Intent(MapBoxActivity.this, Login.class);
+                //startActivity(intent);
+
                 break;
             case R.id.locate:
                 locationComponent.setCameraMode(CameraMode.TRACKING);

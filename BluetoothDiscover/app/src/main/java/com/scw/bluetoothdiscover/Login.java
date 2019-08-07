@@ -3,7 +3,6 @@ package com.scw.bluetoothdiscover;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -16,23 +15,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-
 public class Login extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
     private final AppCompatActivity activity = Login.this;
 
-    //private InputValidation inputValidation;
 
     private static Handler handler_data;
     private static final int SUCCESS_MSG = 1;
-    //获取失败返回message
     private static final int FAILURE_MSG = 0;
 
     private Button loginButton;
@@ -42,17 +30,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
 
     private EditText nameInput;
     private EditText passwordInput;
+    private EditText ipInput;
     private TextView nameCheck;
     private TextView passwordCheck;
 
     private InputMethodManager imm;
 
     private HttpRequest httpRequest;
-    private Scanner_BTLE scanner_btle; //test
-    Handler handler;//test
-    Runnable runnable;//test
-    JSONArray deviceArray = new JSONArray();//test
-    Location userLocation = new Location("");//test
 
     private boolean nameCheckResult = false;
     private boolean passwordCheckResult = false;
@@ -120,6 +104,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
 
         nameInput = (EditText) findViewById(R.id.nameInput);
         passwordInput = (EditText) findViewById(R.id.passwordInput);
+        ipInput = (EditText) findViewById(R.id.ipInput);
 
         nameCheck = (TextView) findViewById(R.id.nameCheck);
         passwordCheck = (TextView) findViewById(R.id.passwordCheck);
@@ -142,37 +127,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
      * This method is to initialize objects to be used
      */
     private void initObjects() {
-        //HttpRequest
-        //httpRequest = new HttpRequest(getString(R.string.server_test));
-        httpRequest = new HttpRequest(this);
+
         user = new User();
-        scanner_btle = new Scanner_BTLE(this, -100);
-        userLocation.setLatitude(35.664065);
-        userLocation.setLongitude(139.677224);
-        handler = new Handler();
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                deviceJSON(scanner_btle.result());
-                scanner_btle.clean();
-                Thread testThread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        readJSON(httpRequest.doPostData(deviceArray, (float) 35.664065, (float) 139.677224, "testname"));
-
-                    }
-
-                });
-                testThread.start();
-                try {
-                    testThread.join();
-                } catch (
-                        InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        };
 
     }
 
@@ -200,6 +156,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
+                //HttpRequest
+                httpRequest = new HttpRequest(this, ipInput.getText().toString());
                 login();
                 break;
             case R.id.create:
@@ -209,21 +167,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
                 //finish();
                 break;
             case R.id.enter:
-                //scanner_btle.start();
-                //handler.postDelayed(runnable, 5000);
 
 
                 // Navigate to Map Activity
                 Intent intentEnter = new Intent(getApplicationContext(), MapBoxActivity.class);
-                //intentEnter.putExtra("login", false);
+                // Get ip address from ipInput
+                String ipAddress = ipInput.getText().toString();
+                intentEnter.putExtra("ipAddress", ipAddress);
                 startActivity(intentEnter);
 
                 break;
             case R.id.check:
-                //Intent intentCheck = new Intent(getApplicationContext(), Check.class);
-                //startActivity(intentCheck);
-                scanner_btle.start();
-                handler.postDelayed(runnable, 5000);
+                Intent intentCheck = new Intent(getApplicationContext(), Check.class);
+                startActivity(intentCheck);
                 break;
             default:
                 break;
@@ -250,60 +206,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
                 break;
         }
 
-    }
-
-    //test
-    private void readJSON(String showHttp) {
-        try {
-            JSONArray jsonArray = new JSONArray(showHttp);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                //int user_to_device_id = jsonObject.getInt("user_to_device_id");
-                //String date = jsonObject.getString("date");
-                double lat_locate = jsonObject.getDouble("lat");
-                double long_locate = jsonObject.getDouble("long");
-                String mac_address = jsonObject.getString("mac_address");
-                int rssi = jsonObject.getInt("rssi");
-                System.out.println("Test " + lat_locate + " " + long_locate + " " + mac_address + rssi);
-                // Set Marker
-//                mapboxMap.addMarker(new MarkerOptions()
-//                                .position(new LatLng(lat_locate, long_locate))
-//                        //.title("rssi " + rssi)
-//                        //.snippet(mac_address)
-//                );
-                //System.out.println(user_to_device_id + date + lat_locate + long_locate + mac_address + rssi);
-                //idList.add(id);
-                //nameList.add(name);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //test
-    private void deviceJSON(HashMap<String, Integer> resultList) {
-        //  delete last json
-        try {
-            deviceArray = new JSONArray("[]");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        Iterator iter = resultList.entrySet().iterator();
-        //HashMap<String, Float> resultList = new HashMap<>();
-        while (iter.hasNext()) {
-            Map.Entry entry = (Map.Entry) iter.next();
-            String key = (String) entry.getKey();
-            int value = (int) entry.getValue();
-            JSONObject device = new JSONObject();
-            try {
-                device.put("address", key);
-                device.put("rssi", value);
-                deviceArray.put(device);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 
@@ -363,14 +265,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
             }
         }).start();
 
-    }
-
-    /**
-     * This method is to empty all input edit text
-     */
-    private void emptyInputEditText() {
-        nameInput.setText(null);
-        nameCheck.setText(null);
     }
 
 
