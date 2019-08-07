@@ -1,10 +1,15 @@
 package com.scw.bluetoothdiscover;
 
 
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -43,6 +48,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
 
     private User user;
 
+    // Check sensor
+    private BluetoothAdapter mBluetoothAdapter;
+    private LocationManager mLocationManager;
+    private static final int REQUEST_ENABLE_BT = 0;
+    private static final int REQUEST_ENABLE_GPS = 1;
 
     String checkResult = null;
     String username = null;
@@ -55,6 +65,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
 
+        checkPhone();
         initViews();
         initObjects();
 
@@ -130,6 +141,45 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
 
         user = new User();
 
+    }
+
+    private void checkPhone() {
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            Utils.toast(getApplicationContext(), "Bluetooth not supported");
+        }
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+        }
+        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        boolean gps = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (!gps) {
+            Intent enableIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_GPS);
+        }
+        //boolean network = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case REQUEST_ENABLE_BT:
+                if (resultCode == Activity.RESULT_OK) {
+                    Utils.toast(getApplicationContext(), "Bluetooth is on");
+                } else {
+                    Utils.toast(getApplicationContext(), "Bluetooth error");
+                }
+                break;
+            case REQUEST_ENABLE_GPS:
+                if (resultCode == Activity.RESULT_OK) {
+                    Utils.toast(getApplicationContext(), "GPS is on");
+                } else {
+                    Utils.toast(getApplicationContext(), "GPS error");
+                }
+                break;
+        }
     }
 
     @Override

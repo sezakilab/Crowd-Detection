@@ -80,8 +80,8 @@ public class HttpRequest {
 
 
         // Set HTTP
-        sendData("/post_data", JSON, jsonData);
-        return serverResponse;
+
+        return sendData("/post_data", JSON, jsonData);
     }
 
     // Login
@@ -147,7 +147,11 @@ public class HttpRequest {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         Date date = new Date(System.currentTimeMillis());
         JSONObject jsonData = new JSONObject();
+        // Test past time
+        /*
         try {
+
+
             Date oldTime = simpleDateFormat.parse(time);
             System.out.println(time);
             Date addTime = new Date(oldTime.getTime() + 11000);
@@ -156,12 +160,16 @@ public class HttpRequest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        */
+        time = simpleDateFormat.format(date);
+        System.out.println("Test: " + time);
         try {
             jsonData.put("date", time);
             //jsonData.put("date", simpleDateFormat.format(date));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        /*
         RequestBody body = RequestBody.create(JSON, jsonData.toString());
         Request request = new Request.Builder()
                 .url(mUrl + "/post_query")
@@ -178,10 +186,13 @@ public class HttpRequest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return serverResponse;
+        */
+        // Test
+
+        return sendData("/post_query", JSON, jsonData);
     }
 
-    private void sendData(String urlGoal, MediaType JSON, JSONObject jsonData) {
+    private String sendData(String urlGoal, MediaType JSON, JSONObject jsonData) {
         RequestBody body = RequestBody.create(JSON, jsonData.toString());
         Request request = new Request.Builder()
                 .url(mUrl + urlGoal)
@@ -194,11 +205,13 @@ public class HttpRequest {
                 serverResponse = response.body().string();
                 System.out.println("Test response " + serverResponse);
             } else {
+                serverResponse="Test web fail";
                 System.out.println("Test web fail");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return serverResponse;
 
     }
 

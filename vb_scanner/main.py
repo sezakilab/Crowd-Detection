@@ -9,7 +9,7 @@ import random
 
 def current_datetime():
     now = datetime.datetime.now()
-    return now.strftime("%Y/%m/%d %H:%M:%S")
+    return now.strftime("%Y-%m-%d %H:%M:%S")
 
 class VirtualDevice(threading.Thread):
     def __init__(self, uid=0, interval=1, url='http://127.0.0.1:5000/post_data', live=False):

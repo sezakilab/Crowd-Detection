@@ -191,7 +191,6 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
 
         // Setting http
         String ipAddress = intent.getStringExtra("ipAddress");
-        System.out.println("Test: " + ipAddress);
         httpRequest = new HttpRequest(this, ipAddress);
         scanner_btle = new Scanner_BTLE(this, -100);
 
@@ -202,25 +201,26 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
             public void run() {
                 deviceJSON(scanner_btle.result());
                 scanner_btle.clean();
-                System.out.println("Test: " + deviceArray);
-                handler.postDelayed(this, 5000);
-                /*
-                Thread testThread = new Thread(new Runnable() {
+
+
+                Thread sendThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        readJSON(httpRequest.doPostData(deviceArray, (float) 35.664065, (float) 139.677224, "testname"));
-
+                        // Upload Bluetooth data
+                        System.out.println("Test:"+httpRequest.doPostData(deviceArray, (float) 35.664065, (float) 139.677224, "testname"));
                     }
 
                 });
-                testThread.start();
+                sendThread.start();
                 try {
-                    testThread.join();
+                    sendThread.join();
                 } catch (
                         InterruptedException e) {
                     e.printStackTrace();
                 }
-                */
+
+                handler.postDelayed(this, 5000);
+
 
             }
         };
@@ -495,7 +495,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 }
                 updateMarkerPosition();
                 updateLine();
-                updatehandler.postDelayed(this, 3000);
+                updatehandler.postDelayed(this, 2000);
             }
         };
         updatehandler.post(updaterunnable);
@@ -708,7 +708,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 double b = userLocation.getLastKnownLocation().getLongitude();
                 Toast.makeText(getApplicationContext(), "test1: " + a + " " + b, Toast.LENGTH_LONG).show();*/
 
-                /*
+
                 if (!scanner_btle.isScanning()) {
                     startButton.setText("Stop");
                     Utils.toast(getApplicationContext(), "Start");
@@ -720,7 +720,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                     scanner_btle.stop();
                     handler.removeCallbacks(blescanRunnable);
                 }
-                */
+
 
 
                 // Replay test
