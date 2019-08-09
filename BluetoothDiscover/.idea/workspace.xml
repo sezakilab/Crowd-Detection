@@ -18,11 +18,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8715a402-c94e-4ca2-bb16-d96b08325d32" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/HttpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/HttpRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Login.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/MapBoxActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/MapBoxActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../vb_scanner/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../vb_scanner/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,8 +56,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/MapBoxActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="722" selection-start-line="722" selection-end-line="722" />
+            <state relative-caret-position="297">
+              <caret line="252" column="16" selection-start-line="252" selection-start-column="16" selection-end-line="252" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -72,7 +68,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Register.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
+            <state relative-caret-position="334">
               <caret line="74" column="26" selection-start-line="74" selection-start-column="26" selection-end-line="74" selection-end-column="26" />
             </state>
           </provider>
@@ -81,8 +77,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/HttpRequest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
-              <caret line="185" column="33" selection-start-line="185" selection-start-column="33" selection-end-line="185" selection-end-column="33" />
+            <state relative-caret-position="300">
+              <caret line="155" column="22" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,8 +89,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Scanner_BTLE.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-790">
-              <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="47" />
+            <state relative-caret-position="510">
+              <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1089#1090#0" expanded="true" />
@@ -139,19 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>interpolate</find>
-      <find>addline</find>
-      <find>latb</find>
-      <find>line</find>
-      <find>point</find>
-      <find>updatefun</find>
-      <find>Utils</find>
-      <find>logoutButton</find>
-      <find>REQUEST_ENABLE_BT</find>
-      <find>System.ou</find>
-      <find>bluetooth</find>
-      <find>Utils.toastUtils.toast(getApplicationContext(), &quot;BLE not supported&quot;);</find>
-      <find>Utils.toast</find>
       <find>checkPhone</find>
       <find>Utils.toast(getApplicationContext()</find>
       <find>sendData</find>
@@ -159,16 +142,29 @@
       <find>deviceArray</find>
       <find>bluetoothad</find>
       <find>deviceJSON</find>
-      <find>readJSON</find>
       <find>serverResponse</find>
       <find>updateFun</find>
       <find>time</find>
-      <find>blescanRunnable</find>
       <find>System.out.println</find>
       <find>update</find>
       <find>doPostQuery</find>
-      <find>onclick</find>
       <find>response false</find>
+      <find>locate</find>
+      <find>last</find>
+      <find>userLocation</find>
+      <find>location</find>
+      <find>blescanRunnable</find>
+      <find>onclick</find>
+      <find>updatehandler</find>
+      <find>handler</find>
+      <find>System.out</find>
+      <find>pathRecord</find>
+      <find>readJSON</find>
+      <find>heatmap</find>
+      <find>HEATMAP_LAYER_ID</find>
+      <find>mag</find>
+      <find>circle</find>
+      <find>addCircleLayer</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -196,10 +192,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="2" />
-    <option name="width" value="2746" />
-    <option name="height" value="1756" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-278" />
+    <option name="y" value="62" />
+    <option name="width" value="1279" />
+    <option name="height" value="640" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -406,10 +403,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="0" width="1373" height="878" extended-state="0" />
+    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49872774" visible="true" weight="0.14676806" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49872774" visible="true" weight="0.07670906" />
       <window_info id="Structure" order="1" sideWeight="0.50127226" side_tool="true" weight="0.08306836" />
       <window_info id="Captures" order="2" sideWeight="0.50127226" side_tool="true" weight="0.08306836" />
       <window_info id="Designer" order="3" />
@@ -428,7 +425,7 @@
       <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49880764" weight="0.2461964" />
       <window_info anchor="bottom" id="Android Profiler" order="8" weight="0.32962668" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5011924" side_tool="true" weight="0.17156473" />
-      <window_info active="true" anchor="bottom" x="10" y="419" width="2516" height="713" id="Logcat" order="10" sideWeight="0.49960256" visible="true" weight="0.38174275" />
+      <window_info active="true" anchor="bottom" x="10" y="419" width="2516" height="713" id="Logcat" order="10" sideWeight="0.49960256" visible="true" weight="0.17488076" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.3298887" />
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.32750398" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -436,9 +433,9 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="right" id="Preview" order="4" />
-      <window_info anchor="right" x="0" y="0" width="594" height="1216" id="Documentation" order="5" sideWeight="0.5055928" side_tool="true" visible="true" weight="0.13612168" />
+      <window_info anchor="right" x="0" y="0" width="594" height="1216" id="Documentation" order="5" sideWeight="0.672447" side_tool="true" visible="true" weight="0.064785376" />
       <window_info anchor="right" id="Device File Explorer" order="6" side_tool="true" weight="0.3298887" />
-      <window_info anchor="right" id="Gradle" order="7" sideWeight="0.49440715" visible="true" weight="0.13612168" />
+      <window_info anchor="right" id="Gradle" order="7" sideWeight="0.32755297" visible="true" weight="0.064785376" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
       <window_info anchor="right" id="Assistant" order="10" weight="0.3298887" />
@@ -624,10 +621,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Register.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="74" column="26" selection-start-line="74" selection-start-column="26" selection-end-line="74" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/HttpRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="155" column="22" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Scanner_BTLE.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-790">
-          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="47" />
+        <state relative-caret-position="510">
+          <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1089#1090#0" expanded="true" />
@@ -636,27 +650,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Register.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="74" column="26" selection-start-line="74" selection-start-column="26" selection-end-line="74" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/HttpRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="185" column="33" selection-start-line="185" selection-start-column="33" selection-end-line="185" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/MapBoxActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="722" selection-start-line="722" selection-end-line="722" />
+        <state relative-caret-position="297">
+          <caret line="252" column="16" selection-start-line="252" selection-start-column="16" selection-end-line="252" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

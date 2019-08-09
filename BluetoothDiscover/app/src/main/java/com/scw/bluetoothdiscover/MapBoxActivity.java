@@ -89,6 +89,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -109,17 +111,25 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     private static final String SOURCE_ID = "SOURCE_ID";
     private static final String ICON_ID = "ICON_ID";
     private static final String LAYER_ID = "LAYER_ID";
+
+    // Test heatmap
+    private static final String EARTHQUAKE_SOURCE_URL = "https://www.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson";
+    private static final String EARTHQUAKE_SOURCE_ID = "earthquakes";
     private static final String HEATMAP_LAYER_ID = "earthquakes-heat";
     private static final String HEATMAP_LAYER_SOURCE = "earthquakes";
     private static final String CIRCLE_LAYER_ID = "earthquakes-circle";
+    //
+
+
     private static LocationComponent locationComponent;    // Mapbox Location Object
     private static HashMap<String, ArrayList<LatLng>> pathRecord;  // For drawing device path
     private static HashMap<String, Integer> pathTimer;     // For deleting time out device path
     private static HashMap<LatLng, Integer> pointResult;   // For setting icon markers
     private static int timerValue = 6;                     // For setting default timer
     private FeatureCollection lineFeatureCollection;
+    private static Location userLocation;
 
-    private Handler updatehandler;
+    //private Handler updatehandler;
     private Runnable updaterunnable;
 
     // Bluetooth scanning
@@ -202,12 +212,14 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 deviceJSON(scanner_btle.result());
                 scanner_btle.clean();
 
-
+                userLocation = map.getLocationComponent().getLastKnownLocation();
+                System.out.println("Test: " + deviceArray);
                 Thread sendThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         // Upload Bluetooth data
-                        System.out.println("Test:"+httpRequest.doPostData(deviceArray, (float) 35.664065, (float) 139.677224, "testname"));
+                        httpRequest.doPostData(deviceArray, (float) userLocation.getLatitude(), (float) userLocation.getLongitude(), "testname");
+                        //System.out.println("Test:" + httpRequest.doPostData(deviceArray, (float) 35.664065, (float) 139.677224, "testname"));
                     }
 
                 });
@@ -235,6 +247,11 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onStyleLoaded(@NonNull Style style) {
 
+                // Test heatmap
+                addEarthquakeSource(style);
+                addHeatmapLayer(style);
+                addCircleLayer(style);
+                //
 
                 //updateFun();
                 //addSourceTest(style);
@@ -275,6 +292,14 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
         locationComponent.setRenderMode(RenderMode.COMPASS);
     }
 
+    private void addEarthquakeSource(@NonNull Style loadedMapStyle) {
+        try {
+            loadedMapStyle.addSource(new GeoJsonSource(EARTHQUAKE_SOURCE_ID, new URI(EARTHQUAKE_SOURCE_URL)));
+        } catch (URISyntaxException uriSyntaxException) {
+            Timber.e(uriSyntaxException, "That's not an url... ");
+        }
+    }
+
     private void addSourceTest(@NonNull Style loadedMapStyle) {
         try {
             loadedMapStyle.addSource(new GeoJsonSource("SOURCE_ID_TEST", new URL("https://www.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson")));
@@ -285,7 +310,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
     private void addHeatmapLayer(@NonNull Style loadedMapStyle) {
-        HeatmapLayer layer = new HeatmapLayer(HEATMAP_LAYER_ID, SOURCE_ID);
+        HeatmapLayer layer = new HeatmapLayer(HEATMAP_LAYER_ID, EARTHQUAKE_SOURCE_ID);
         layer.setMaxZoom(9);
         layer.setSourceLayer(HEATMAP_LAYER_SOURCE);
         layer.setProperties(
@@ -423,7 +448,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private void addCircleLayer(@NonNull Style loadedMapStyle) {
 
-        CircleLayer circleLayer = new CircleLayer(CIRCLE_LAYER_ID, SOURCE_ID);
+        CircleLayer circleLayer = new CircleLayer(CIRCLE_LAYER_ID, EARTHQUAKE_SOURCE_ID);
         circleLayer.setProperties(
 
                 // Size circle radius by earthquake magnitude and zoom level
@@ -474,7 +499,6 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
     private void updateFun() {
-        updatehandler = new Handler();
         updaterunnable = new Runnable() {
             @Override
             public void run() {
@@ -495,10 +519,10 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 }
                 updateMarkerPosition();
                 updateLine();
-                updatehandler.postDelayed(this, 2000);
+                handler.postDelayed(this, 2000);
             }
         };
-        updatehandler.post(updaterunnable);
+        handler.post(updaterunnable);
 
     }
 
@@ -703,6 +727,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
         switch (v.getId()) {
 
             case R.id.startButton:
+
                 /*userLocation = mapboxMap.getLocationComponent();
                 double a = userLocation.getLastKnownLocation().getLatitude();
                 double b = userLocation.getLastKnownLocation().getLongitude();
@@ -714,22 +739,23 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                     Utils.toast(getApplicationContext(), "Start");
                     scanner_btle.start();
                     handler.postDelayed(blescanRunnable, 5000);
+                    // Replay test
+                    updateFun();
                 } else {
                     startButton.setText("Start");
                     Utils.toast(getApplicationContext(), "Stop");
                     scanner_btle.stop();
                     handler.removeCallbacks(blescanRunnable);
+                    handler.removeCallbacks(updaterunnable);
                 }
 
 
 
-                // Replay test
-                updateFun();
                 break;
             case R.id.logout:
 
-
-                updatehandler.removeCallbacks(updaterunnable);
+                handler.removeCallbacks(blescanRunnable);
+                handler.removeCallbacks(updaterunnable);
                 finish();
                 //Intent intent = new Intent(MapBoxActivity.this, Login.class);
                 //startActivity(intent);
