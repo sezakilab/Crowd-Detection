@@ -1,9 +1,5 @@
 package com.scw.bluetoothdiscover;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,33 +7,29 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.gson.JsonElement;
-import com.mapbox.android.core.permissions.PermissionsManager;
+import com.google.gson.JsonObject;
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.FeatureCollection;
 import com.mapbox.geojson.LineString;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
-import com.mapbox.mapboxsdk.annotations.MarkerOptions;
-import com.mapbox.mapboxsdk.camera.CameraPosition;
-import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions;
+import com.mapbox.mapboxsdk.location.modes.CameraMode;
+import com.mapbox.mapboxsdk.location.modes.RenderMode;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
-import com.mapbox.mapboxsdk.style.expressions.Expression;
-import com.mapbox.mapboxsdk.style.layers.CircleLayer;
 import com.mapbox.mapboxsdk.style.layers.HeatmapLayer;
-import com.mapbox.mapboxsdk.style.layers.Layer;
 import com.mapbox.mapboxsdk.style.layers.LineLayer;
 import com.mapbox.mapboxsdk.style.layers.Property;
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
@@ -45,8 +37,22 @@ import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonOptions;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 
-import com.mapbox.mapboxsdk.location.modes.CameraMode;
-import com.mapbox.mapboxsdk.location.modes.RenderMode;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import timber.log.Timber;
 
 import static com.mapbox.mapboxsdk.style.expressions.Expression.get;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.heatmapDensity;
@@ -58,11 +64,6 @@ import static com.mapbox.mapboxsdk.style.expressions.Expression.rgb;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.rgba;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.stop;
 import static com.mapbox.mapboxsdk.style.expressions.Expression.zoom;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.circleColor;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.circleOpacity;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.circleRadius;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.circleStrokeColor;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.circleStrokeWidth;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.heatmapColor;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.heatmapIntensity;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.heatmapOpacity;
@@ -71,7 +72,6 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.heatmapWeight;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconAllowOverlap;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconIgnorePlacement;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconImage;
-import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.iconOffset;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineCap;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineGradient;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.lineJoin;
@@ -80,27 +80,6 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.textColor;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.textField;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.textIgnorePlacement;
 import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.textOffset;
-
-
-import android.os.Handler;
-
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import com.google.gson.JsonObject;
-
-import timber.log.Timber;
 
 
 public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
@@ -112,13 +91,18 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     private static final String ICON_ID = "ICON_ID";
     private static final String LAYER_ID = "LAYER_ID";
 
-    // Test heatmap
-    private static final String EARTHQUAKE_SOURCE_URL = "https://www.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson";
-    private static final String EARTHQUAKE_SOURCE_ID = "earthquakes";
-    private static final String HEATMAP_LAYER_ID = "earthquakes-heat";
-    private static final String HEATMAP_LAYER_SOURCE = "earthquakes";
-    private static final String CIRCLE_LAYER_ID = "earthquakes-circle";
-    //
+    //heatmap
+    private static final String HEATMAP_SOURCE_URL = "http://192.168.22.110:5000/static/shimokitazawa.geojson";
+    private static final String HEATMAP_SOURCE_ID = "heatmap-bluetooth";
+    private static final String HEATMAP_LAYER_ID = "heatmap-bl-layer";
+    private static final String HEATMAP_LAYER_SOURCE = "heatmap-layer-source";
+
+    //arrow
+    private static final String ARROW_SOURCE_URL = "http://192.168.22.110:5000/static/shimokitazawa_arrow.geojson";
+    private static final String ARROW_SOURCE_ID = "arrow-source";
+    private static final String ARROW_LAYER_ID = "arrow-layer";
+    private static final String ARROW_LAYER_SOURCE = "arrow-layer-source";
+
 
 
     private static LocationComponent locationComponent;    // Mapbox Location Object
@@ -247,23 +231,17 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onStyleLoaded(@NonNull Style style) {
 
-                // Test heatmap
+                // heatmap
                 addEarthquakeSource(style);
                 addHeatmapLayer(style);
-                addCircleLayer(style);
-                //
 
-                //updateFun();
-                //addSourceTest(style);
-
-                //addHeatmapLayer(style);
-                //addCircleLayer(style);
+                // Arrow
+                addArrowLayer(style);
 
                 // Path setting
                 addLineLayer(style);
                 // Marker setting
                 addPointLayer(style);
-
 
                 // Location
                 enableLocationComponent(style);
@@ -294,48 +272,56 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private void addEarthquakeSource(@NonNull Style loadedMapStyle) {
         try {
-            loadedMapStyle.addSource(new GeoJsonSource(EARTHQUAKE_SOURCE_ID, new URI(EARTHQUAKE_SOURCE_URL)));
+            loadedMapStyle.addSource(new GeoJsonSource(HEATMAP_SOURCE_ID, new URI(HEATMAP_SOURCE_URL)));
         } catch (URISyntaxException uriSyntaxException) {
             Timber.e(uriSyntaxException, "That's not an url... ");
         }
     }
 
-    private void addSourceTest(@NonNull Style loadedMapStyle) {
-        try {
-            loadedMapStyle.addSource(new GeoJsonSource("SOURCE_ID_TEST", new URL("https://www.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson")));
-        } catch (MalformedURLException malformedUrlException) {
-            Timber.e(malformedUrlException, "That's not an url... ");
+
+    private void addArrowLayer(@NonNull Style loadedMapStyle){
+        try{
+            loadedMapStyle.addSource(new GeoJsonSource(ARROW_SOURCE_ID, new URI(ARROW_SOURCE_URL)));
+        }catch (URISyntaxException e){
+            e.printStackTrace();
         }
+
+        LineLayer layer = new LineLayer(ARROW_LAYER_ID, ARROW_SOURCE_ID);
+        layer.setProperties(
+//                PropertyFactory.lineDasharray(new Float[] {0.01f, 2f}),
+                PropertyFactory.lineCap(Property.LINE_CAP_SQUARE),
+                PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
+                PropertyFactory.lineWidth(2f),
+                PropertyFactory.lineColor(Color.parseColor("#e55e5e"))
+//                PropertyFactory.linecol
+        );
+        loadedMapStyle.addLayer(layer);
     }
 
-
     private void addHeatmapLayer(@NonNull Style loadedMapStyle) {
-        HeatmapLayer layer = new HeatmapLayer(HEATMAP_LAYER_ID, EARTHQUAKE_SOURCE_ID);
-        layer.setMaxZoom(9);
-        layer.setSourceLayer(HEATMAP_LAYER_SOURCE);
+        HeatmapLayer layer = new HeatmapLayer(HEATMAP_LAYER_ID, HEATMAP_SOURCE_ID);
+        layer.setMaxZoom(22);
         layer.setProperties(
-
                 // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
                 // Begin color ramp at 0-stop with a 0-transparency color
                 // to create a blur-like effect.
                 heatmapColor(
                         interpolate(
                                 linear(), heatmapDensity(),
-                                literal(0), rgba(33, 102, 172, 0),
-                                literal(0.2), rgb(103, 169, 207),
-                                literal(0.4), rgb(209, 229, 240),
-                                literal(0.6), rgb(253, 219, 199),
-                                literal(0.8), rgb(239, 138, 98),
-                                literal(1), rgb(178, 24, 43)
+                                literal(0.01), rgba(255, 255, 255, 0.4),
+                                literal(0.25), rgba(4, 179, 183, 1.0),
+                                literal(0.5), rgba(204, 211, 61, 1.0),
+                                literal(0.75), rgba(252, 167, 55, 1.0),
+                                literal(1), rgba(255, 78, 70, 1.0)
                         )
                 ),
 
                 // Increase the heatmap weight based on frequency and property magnitude
                 heatmapWeight(
                         interpolate(
-                                linear(), get("mag"),
+                                linear(), get("avg"),
                                 stop(0, 0),
-                                stop(6, 1)
+                                stop(20, 1)
                         )
                 ),
 
@@ -345,7 +331,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                         interpolate(
                                 linear(), zoom(),
                                 stop(0, 1),
-                                stop(9, 3)
+                                stop(22, 1)
                         )
                 ),
 
@@ -353,8 +339,8 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 heatmapRadius(
                         interpolate(
                                 linear(), zoom(),
-                                stop(0, 2),
-                                stop(9, 20)
+                                stop(0, 4),
+                                stop(22, 80)
                         )
                 ),
 
@@ -362,13 +348,13 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 heatmapOpacity(
                         interpolate(
                                 linear(), zoom(),
-                                stop(7, 1),
-                                stop(9, 0)
+                                stop(7, 0.8),
+                                stop(9, 0.8)
                         )
                 )
         );
 
-        loadedMapStyle.addLayerAbove(layer, "waterway-label");
+        loadedMapStyle.addLayer(layer);
     }
 
     private void addLineLayer(@NonNull Style loadedMapStyle) {
@@ -442,61 +428,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 textIgnorePlacement(true),
                 iconIgnorePlacement(true));
         loadedMapStyle.addLayer(symbolLayer);
-        //Heat map
-        //loadedMapStyle.addLayerBelow(symbolLayer, HEATMAP_LAYER_ID);
     }
-
-    private void addCircleLayer(@NonNull Style loadedMapStyle) {
-
-        CircleLayer circleLayer = new CircleLayer(CIRCLE_LAYER_ID, EARTHQUAKE_SOURCE_ID);
-        circleLayer.setProperties(
-
-                // Size circle radius by earthquake magnitude and zoom level
-                circleRadius(
-                        interpolate(
-                                linear(), zoom(),
-                                literal(7), interpolate(
-                                        linear(), get("mag"),
-                                        stop(1, 1),
-                                        stop(6, 4)
-                                ),
-                                literal(16), interpolate(
-                                        linear(), get("mag"),
-                                        stop(1, 5),
-                                        stop(6, 50)
-                                )
-                        )
-                ),
-
-                // Color circle by earthquake magnitude
-                circleColor(
-                        interpolate(
-                                linear(), get("mag"),
-                                literal(1), rgba(33, 102, 172, 0),
-                                literal(2), rgb(103, 169, 207),
-                                literal(3), rgb(209, 229, 240),
-                                literal(4), rgb(253, 219, 199),
-                                literal(5), rgb(239, 138, 98),
-                                literal(6), rgb(178, 24, 43)
-                        )
-                ),
-
-                // Transition from heatmap to circle layer by zoom level
-                circleOpacity(
-                        interpolate(
-                                linear(), zoom(),
-                                stop(7, 0),
-                                stop(8, 1)
-                        )
-                ),
-                circleStrokeColor("white"),
-                circleStrokeWidth(1.0f)
-        );
-
-
-        loadedMapStyle.addLayerBelow(circleLayer, HEATMAP_LAYER_ID);
-    }
-
 
     private void updateFun() {
         updaterunnable = new Runnable() {
