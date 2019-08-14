@@ -236,7 +236,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 addHeatmapLayer(style);
 
                 // Arrow
-                //addArrowLayer(style);
+                addArrowLayer(style);
 
                 // Path setting
                 addLineLayer(style);
