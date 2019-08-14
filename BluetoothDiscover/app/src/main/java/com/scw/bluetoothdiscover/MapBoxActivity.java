@@ -92,13 +92,13 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     private static final String LAYER_ID = "LAYER_ID";
 
     //heatmap
-    private static final String HEATMAP_SOURCE_URL = "http://192.168.22.110:5000/static/shimokitazawa.geojson";
+    private static final String HEATMAP_SOURCE_URL = "http://192.168.0.10:5000/static/shimokitazawa.geojson";
     private static final String HEATMAP_SOURCE_ID = "heatmap-bluetooth";
     private static final String HEATMAP_LAYER_ID = "heatmap-bl-layer";
     private static final String HEATMAP_LAYER_SOURCE = "heatmap-layer-source";
 
     //arrow
-    private static final String ARROW_SOURCE_URL = "http://192.168.22.110:5000/static/shimokitazawa_arrow.geojson";
+    private static final String ARROW_SOURCE_URL = "http://192.168.0.10:5000/static/shimokitazawa_arrow.geojson";
     private static final String ARROW_SOURCE_ID = "arrow-source";
     private static final String ARROW_LAYER_ID = "arrow-layer";
     private static final String ARROW_LAYER_SOURCE = "arrow-layer-source";
@@ -236,7 +236,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 addHeatmapLayer(style);
 
                 // Arrow
-                addArrowLayer(style);
+                //addArrowLayer(style);
 
                 // Path setting
                 addLineLayer(style);
@@ -244,7 +244,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 addPointLayer(style);
 
                 // Location
-                enableLocationComponent(style);
+                //enableLocationComponent(style);
 
             }
         });
@@ -300,7 +300,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private void addHeatmapLayer(@NonNull Style loadedMapStyle) {
         HeatmapLayer layer = new HeatmapLayer(HEATMAP_LAYER_ID, HEATMAP_SOURCE_ID);
-        layer.setMaxZoom(22);
+        layer.setMaxZoom(25);
         layer.setProperties(
                 // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
                 // Begin color ramp at 0-stop with a 0-transparency color
@@ -320,8 +320,8 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 heatmapWeight(
                         interpolate(
                                 linear(), get("avg"),
-                                stop(0, 0),
-                                stop(20, 1)
+                                stop(1, 0),
+                                stop(50, 1)
                         )
                 ),
 
@@ -331,7 +331,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                         interpolate(
                                 linear(), zoom(),
                                 stop(0, 1),
-                                stop(22, 1)
+                                stop(25, 4)
                         )
                 ),
 
@@ -339,8 +339,10 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 heatmapRadius(
                         interpolate(
                                 linear(), zoom(),
-                                stop(0, 4),
-                                stop(22, 80)
+                                stop(10, 5),
+                                stop(15, 20),
+                                stop(20, 130),
+                                stop(25, 200)
                         )
                 ),
 
@@ -348,8 +350,8 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 heatmapOpacity(
                         interpolate(
                                 linear(), zoom(),
-                                stop(7, 0.8),
-                                stop(9, 0.8)
+                                stop(0, 1),
+                                stop(25, 1)
                         )
                 )
         );

@@ -18,7 +18,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8715a402-c94e-4ca2-bb16-d96b08325d32" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/MapBoxActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/MapBoxActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_map_box.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_map_box.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,14 +55,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/MapBoxActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="252" column="16" selection-start-line="252" selection-start-column="16" selection-end-line="252" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="526">
+              <caret line="342" column="42" selection-start-line="342" selection-start-column="42" selection-end-line="342" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -115,13 +114,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Check.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="713">
+            <state relative-caret-position="1168">
               <caret line="55" selection-start-line="55" selection-end-line="55" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_map_box.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="482">
+              <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
     </leaf>
@@ -135,10 +144,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>checkPhone</find>
-      <find>Utils.toast(getApplicationContext()</find>
-      <find>sendData</find>
-      <find>doPostData</find>
       <find>deviceArray</find>
       <find>bluetoothad</find>
       <find>deviceJSON</find>
@@ -163,8 +168,12 @@
       <find>heatmap</find>
       <find>HEATMAP_LAYER_ID</find>
       <find>mag</find>
-      <find>circle</find>
       <find>addCircleLayer</find>
+      <find>ARROW_SOURCE_URL</find>
+      <find>circle</find>
+      <find>addArrowLayer</find>
+      <find>density</find>
+      <find>maxZoom</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -177,7 +186,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/FileProcess.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_check.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/User.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_map_box.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Utils.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
@@ -189,14 +197,14 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Login.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/HttpRequest.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/MapBoxActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_map_box.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-278" />
-    <option name="y" value="62" />
-    <option name="width" value="1279" />
-    <option name="height" value="640" />
+    <option name="x" value="-7" />
+    <option name="width" value="1294" />
+    <option name="height" value="1407" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -204,9 +212,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -249,6 +254,9 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -406,7 +414,7 @@
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49872774" visible="true" weight="0.07670906" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49872774" visible="true" weight="0.13354531" />
       <window_info id="Structure" order="1" sideWeight="0.50127226" side_tool="true" weight="0.08306836" />
       <window_info id="Captures" order="2" sideWeight="0.50127226" side_tool="true" weight="0.08306836" />
       <window_info id="Designer" order="3" />
@@ -422,10 +430,10 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3290938" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49880764" weight="0.2461964" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49880764" weight="0.09379968" />
       <window_info anchor="bottom" id="Android Profiler" order="8" weight="0.32962668" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5011924" side_tool="true" weight="0.17156473" />
-      <window_info active="true" anchor="bottom" x="10" y="419" width="2516" height="713" id="Logcat" order="10" sideWeight="0.49960256" visible="true" weight="0.17488076" />
+      <window_info anchor="bottom" x="10" y="419" width="2516" height="713" id="Logcat" order="10" sideWeight="0.49960256" visible="true" weight="0.17488076" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.3298887" />
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.32750398" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -433,9 +441,9 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="right" id="Preview" order="4" />
-      <window_info anchor="right" x="0" y="0" width="594" height="1216" id="Documentation" order="5" sideWeight="0.672447" side_tool="true" visible="true" weight="0.064785376" />
+      <window_info anchor="right" x="0" y="0" width="594" height="1216" id="Documentation" order="5" sideWeight="0.6734104" side_tool="true" visible="true" weight="0.064785376" />
       <window_info anchor="right" id="Device File Explorer" order="6" side_tool="true" weight="0.3298887" />
-      <window_info anchor="right" id="Gradle" order="7" sideWeight="0.32755297" visible="true" weight="0.064785376" />
+      <window_info anchor="right" id="Gradle" order="7" sideWeight="0.32658958" visible="true" weight="0.064785376" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
       <window_info anchor="right" id="Assistant" order="10" weight="0.3298887" />
@@ -482,22 +490,22 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/FileProcess.java" />
     <entry file="file://$PROJECT_DIR$/../Tool/Android/Sdk/sources/android-28/android/app/Activity.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_adapter_btle_devices.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/DeviceListAdapter.java" />
     <entry file="file://$PROJECT_DIR$/../Tool/Android/Sdk/sources/android-28/java/lang/Runnable.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_check.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/../Tool/Android/Sdk/sources/android-28/java/lang/Thread.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
@@ -518,14 +526,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../Tool/Android/Sdk/sources/android-28/android/os/Handler.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_map_box.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/BroadcastReceiver_BTState.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/ListAdapter_BTLE_Devices.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/BTLE_Device.java" />
@@ -579,12 +579,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="909">
           <caret line="121" column="46" selection-start-line="121" selection-start-column="46" selection-end-line="121" selection-end-column="46" />
         </state>
       </provider>
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -593,33 +593,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Check.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="713">
-          <caret line="55" selection-start-line="55" selection-end-line="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="9" column="78" selection-start-line="9" selection-start-column="78" selection-end-line="9" selection-end-column="78" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Login.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="154" column="45" selection-start-line="154" selection-start-column="45" selection-end-line="154" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Register.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -632,6 +612,26 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="155" column="22" selection-start-line="155" selection-start-column="12" selection-end-line="155" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Check.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1168">
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/Login.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="154" column="45" selection-start-line="154" selection-start-column="45" selection-end-line="154" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -652,13 +652,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/scw/bluetoothdiscover/MapBoxActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="252" column="16" selection-start-line="252" selection-start-column="16" selection-end-line="252" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="526">
+          <caret line="342" column="42" selection-start-line="342" selection-start-column="42" selection-end-line="342" selection-end-column="42" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_map_box.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
   </component>
 </project>
