@@ -240,7 +240,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 addHeatmapLayer(style);
 
                 // Arrow
-                //addArrowLayer(style);
+                addArrowLayer(style);
 
                 // Path setting
                 addLineLayer(style);
@@ -294,9 +294,9 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
         layer.setProperties(
 //                PropertyFactory.lineDasharray(new Float[] {0.01f, 2f}),
                 PropertyFactory.lineCap(Property.LINE_CAP_SQUARE),
-                PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
+                PropertyFactory.lineJoin(Property.LINE_JOIN_BEVEL),
                 PropertyFactory.lineWidth(2f),
-                PropertyFactory.lineColor(Color.parseColor("#e55e5e"))
+                PropertyFactory.lineColor(Color.parseColor("#264dec"))
 //                PropertyFactory.linecol
         );
         loadedMapStyle.addLayer(layer);
