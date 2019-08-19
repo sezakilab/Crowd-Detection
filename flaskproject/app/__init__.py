@@ -5,11 +5,12 @@ from sqlalchemy import *
 from flask_sqlalchemy import get_debug_queries		# database_debug
 from datetime import datetime, timedelta	# timestamp
 import random
+import os
 
 app = Flask(__name__)  # Get Flast Object，named by the module
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:32274550scw@localhost/test'
 db = SQLAlchemy(app)
-
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 class User(db.Model):
 	__tablename__ = 'user'
@@ -251,6 +252,21 @@ def post_data():
 		return jsonify(info)
 	else:
 		return "false"
+		
+# store photo
+@app.route('/post_photo', methods=['POST'])
+def post_photo(): 
+	image = request.files['photo']
+	#username = request.form.get("name")
+	stringtest = request.form['infomessage']
+	print(stringtest)
+	username = "test"
+	path = basedir+"/static/photo/"
+	file_path = path+image.filename
+	image.save(file_path)
+	print('upload')
+	return 'ok'
+
 
 # login
 @app.route('/login', methods=['POST'])

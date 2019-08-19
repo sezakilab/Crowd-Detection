@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Report">
+
+    <Button
+        android:id="@+id/takephoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="92dp" />
+
+    <ImageView
+        android:id="@+id/picture"
+        android:layout_width="142dp"
+        android:layout_height="228dp"
+        tools:layout_editor_absoluteX="196dp"
+        tools:layout_editor_absoluteY="83dp" />
+
+    <EditText
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="332dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="input info"
+        app:layout_constraintTop_toBottomOf="@+id/takephoto"
+        tools:layout_editor_absoluteX="16dp" />
+
+</android.support.constraint.ConstraintLayout>

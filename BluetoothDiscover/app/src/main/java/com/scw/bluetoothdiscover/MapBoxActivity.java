@@ -84,6 +84,9 @@ import static com.mapbox.mapboxsdk.style.layers.PropertyFactory.textOffset;
 
 public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
 
+    // Activity
+    private static String ipAddress;
+
     // MapBox
     private static MapView mapView;
     private static MapboxMap map;
@@ -92,17 +95,16 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     private static final String LAYER_ID = "LAYER_ID";
 
     //heatmap
-    private static final String HEATMAP_SOURCE_URL = "http://192.168.0.10:5000/static/shimokitazawa.geojson";
+    private static final String HEATMAP_SOURCE_URL = "http://192.168.0.7:5000/static/shimokitazawa.geojson";
     private static final String HEATMAP_SOURCE_ID = "heatmap-bluetooth";
     private static final String HEATMAP_LAYER_ID = "heatmap-bl-layer";
     private static final String HEATMAP_LAYER_SOURCE = "heatmap-layer-source";
 
     //arrow
-    private static final String ARROW_SOURCE_URL = "http://192.168.0.10:5000/static/shimokitazawa_arrow.geojson";
+    private static final String ARROW_SOURCE_URL = "http://192.168.0.7:5000/static/shimokitazawa_arrow.geojson";
     private static final String ARROW_SOURCE_ID = "arrow-source";
     private static final String ARROW_LAYER_ID = "arrow-layer";
     private static final String ARROW_LAYER_SOURCE = "arrow-layer-source";
-
 
 
     private static LocationComponent locationComponent;    // Mapbox Location Object
@@ -130,6 +132,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     private Button startButton;
     private Button logoutButton;
     private Button locateButton;
+    private Button reportButton;
 
     // HttpRequest
     HttpRequest httpRequest;
@@ -173,6 +176,8 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
         findViewById(R.id.logout).setOnClickListener(this);
         locateButton = (Button) findViewById(R.id.locate);
         findViewById(R.id.locate).setOnClickListener(this);
+        reportButton = (Button) findViewById(R.id.locate);
+        findViewById(R.id.report).setOnClickListener(this);
 
 
         // get username from previous Activity
@@ -182,9 +187,8 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
             login = intent.getBooleanExtra("login", false);
         }
 
-
         // Setting http
-        String ipAddress = intent.getStringExtra("ipAddress");
+        ipAddress = intent.getStringExtra("ipAddress");
         httpRequest = new HttpRequest(this, ipAddress);
         scanner_btle = new Scanner_BTLE(this, -100);
 
@@ -197,7 +201,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 scanner_btle.clean();
 
                 userLocation = map.getLocationComponent().getLastKnownLocation();
-                System.out.println("Test: " + deviceArray);
+                System.out.println("Test scanresult: " + deviceArray);
                 Thread sendThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -244,7 +248,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 addPointLayer(style);
 
                 // Location
-                //enableLocationComponent(style);
+                enableLocationComponent(style);
 
             }
         });
@@ -279,10 +283,10 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
 
-    private void addArrowLayer(@NonNull Style loadedMapStyle){
-        try{
+    private void addArrowLayer(@NonNull Style loadedMapStyle) {
+        try {
             loadedMapStyle.addSource(new GeoJsonSource(ARROW_SOURCE_ID, new URI(ARROW_SOURCE_URL)));
-        }catch (URISyntaxException e){
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
@@ -684,7 +688,6 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 }
 
 
-
                 break;
             case R.id.logout:
 
@@ -697,6 +700,13 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 break;
             case R.id.locate:
                 locationComponent.setCameraMode(CameraMode.TRACKING);
+
+                break;
+
+            case R.id.report:
+                Intent intentReport = new Intent(getApplicationContext(), Report.class);
+                intentReport.putExtra("ipAddress", ipAddress);
+                startActivity(intentReport);
 
                 break;
 

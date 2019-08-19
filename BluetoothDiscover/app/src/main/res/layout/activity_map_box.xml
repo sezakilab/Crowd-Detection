@@ -17,7 +17,9 @@
         mapbox:mapbox_cameraTargetLat="35.662339"
         mapbox:mapbox_cameraTargetLng="139.678065"
         mapbox:mapbox_cameraZoom="10"
-        />
+        >
+
+    </com.mapbox.mapboxsdk.maps.MapView>
     <!-- set default location-->
 
 
@@ -40,6 +42,15 @@
         mapbox:layout_constraintHorizontal_bias="1.0"
         mapbox:layout_constraintStart_toEndOf="@+id/startButton"
         tools:layout_editor_absoluteY="0dp" />
+
+    <Button
+        android:id="@+id/report"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="412dp"
+        android:text="report"
+        mapbox:layout_constraintTop_toBottomOf="@+id/startButton"
+        tools:layout_editor_absoluteX="8dp" />
 
     <Button
         android:id="@+id/locate"

@@ -262,13 +262,30 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Vi
     private void login() {
         user.setName(nameInput.getText().toString().trim());
         user.setPassword(passwordInput.getText().toString());
+
+
         Thread loginThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                loginResult = httpRequest.doPostLogin(user.getName(), user.getPassword());
+                httpRequest.doPostLogin(user.getName(), user.getPassword());
             }
         });
         loginThread.start();
+        try {
+            loginThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Test login " + httpRequest.serverResponse);
+        if (httpRequest.serverResponse.equals("good")) {
+            Intent intentStart = new Intent(getApplicationContext(), MapBoxActivity.class);
+            // Get ip address from ipInput
+            String ipAddress = ipInput.getText().toString();
+            intentStart.putExtra("username", user.getName());
+            intentStart.putExtra("ipAddress", ipAddress);
+            startActivity(intentStart);
+        }
+
 
     }
 

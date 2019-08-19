@@ -14,7 +14,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -28,7 +31,7 @@ public class HttpRequest {
     OkHttpClient client;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private Location userLocation;
-    String serverResponse = "";
+    static String serverResponse = "";
     String time = "2019-01-25 12:05:00";
 
     public HttpRequest(Context context, String url) {
@@ -80,8 +83,22 @@ public class HttpRequest {
 
 
         // Set HTTP
-
+        /*
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sendData("/post_data", JSON, jsonData);
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        */
         return sendData("/post_data", JSON, jsonData);
+        //return serverResponse;
     }
 
     // Login
@@ -100,8 +117,21 @@ public class HttpRequest {
             Log.d("OKHTTP3", "JSON EXCEPTION");
             e.printStackTrace();
         }
-        sendData("/login", JSON, jsonData);
-        return serverResponse;
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sendData("/login", JSON, jsonData);
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //return serverResponse;
+        return sendData("/login", JSON, jsonData);
 
 
     }
@@ -110,7 +140,7 @@ public class HttpRequest {
     //  Register
     public String doPostRegister(String username, String password, String email) {
         // Perpare response checking
-        String serverResponse = "nothing";
+        //String serverResponse = "nothing";
 
         // Generate JSON
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -188,16 +218,63 @@ public class HttpRequest {
         }
         */
         // Test
-
+        /*
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sendData("/post_query", JSON, jsonData);
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        */
+        //return serverResponse;
         return sendData("/post_query", JSON, jsonData);
+        //return sendData("/post_query", JSON, jsonData);
+    }
+
+    void sendPhoto(byte[] photoArray, String message) {
+        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                //.addFormDataPart("photo", path.getName(),RequestBody.create(MediaType.parse("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),path))
+                .addFormDataPart("photo", "photo.png", RequestBody.create(MediaType.parse("image/png"), photoArray))
+                .addFormDataPart("infomessage", message)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(mUrl + "/post_photo")
+                .post(body)
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    serverResponse = response.body().string();
+                    System.out.println("Test response " + serverResponse);
+                } else {
+                    serverResponse = "Test web fail";
+                    System.out.println("Test web fail");
+                }
+            }
+        });
     }
 
     private String sendData(String urlGoal, MediaType JSON, JSONObject jsonData) {
-        RequestBody body = RequestBody.create(JSON, jsonData.toString());
+        //RequestBody body = RequestBody.create(JSON, jsonData.toString());
         Request request = new Request.Builder()
                 .url(mUrl + urlGoal)
-                .post(body)
+                .post(RequestBody.create(JSON, jsonData.toString()))
                 .build();
+
         try {
             //System.out.println("Test " + jsonData.toString());
             Response response = client.newCall(request).execute();
@@ -205,12 +282,33 @@ public class HttpRequest {
                 serverResponse = response.body().string();
                 System.out.println("Test response " + serverResponse);
             } else {
-                serverResponse="Test web fail";
+                serverResponse = "Test web fail";
                 System.out.println("Test web fail");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        /*
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    serverResponse = response.body().string();
+                    System.out.println("Test response " + serverResponse);
+                } else {
+                    serverResponse = "Test web fail";
+                    System.out.println("Test web fail");
+                }
+            }
+        });
+        */
         return serverResponse;
 
     }
