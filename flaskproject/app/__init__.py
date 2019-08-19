@@ -6,6 +6,7 @@ from flask_sqlalchemy import get_debug_queries		# database_debug
 from datetime import datetime, timedelta	# timestamp
 import random
 import os
+import geojson
 
 app = Flask(__name__)  # Get Flast Object，named by the module
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:32274550scw@localhost/test'
@@ -302,7 +303,47 @@ def phone():
 	fw.write(info['data'])
 	fw.close()
 	return "ok"
-	
+
+@app.route('/heatmap-data.geojson', methods=['GET'])
+def heatmap():
+	sql ='''\
+select
+	row_number() over() as no,
+	avg(dist_count)::real,
+	count(*) as count,
+	st_asgeojson(ST_Transform(grid_point, 4263)) as geom
+from
+(
+select
+	shift_date,
+	grid_point,
+	count(distinct mac_address) as dist_count,
+	count(mac_address) as count
+from
+(
+	select
+		*,
+		date,
+		date_trunc('minute', date) as shift_date,
+		ST_SnapToGrid(ST_Transform(loc, 2451), -15300, -38000, 10, 10) as grid_point
+	from
+		summary.bluetooth_device_geom
+	where
+		experiment = 'exp3'
+) as data
+group by
+	shift_date, grid_point
+) as src
+group by
+	grid_point
+	'''
+	res = db.session.execute(sql)
+	features = []
+	for row in res.fetchall():
+		point = geojson.loads(row.geom)
+		feature = geojson.Feature(geometry=point, id=row.no, properties={"avg": row.avg, "count": row.count})
+		features.append(feature)
+	return geojson.FeatureCollection(features)
 	
 def sql_debug(response):
     queries = list(get_debug_queries())
