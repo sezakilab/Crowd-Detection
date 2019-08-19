@@ -311,7 +311,7 @@ select
 	row_number() over() as no,
 	avg(dist_count)::real,
 	count(*) as count,
-	st_asgeojson(ST_Transform(grid_point, 4263)) as geom
+	st_asgeojson(ST_Transform(grid_point, 4326)) as geom
 from
 (
 select
