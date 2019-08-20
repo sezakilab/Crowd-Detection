@@ -95,7 +95,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
     private static final String LAYER_ID = "LAYER_ID";
 
     //heatmap
-    private static final String HEATMAP_SOURCE_URL = "http://192.168.0.7:5000/static/shimokitazawa.geojson";
+    private static final String HEATMAP_SOURCE_URL = "http://192.168.0.7:5000/heatmap-data.geojson";
     private static final String HEATMAP_SOURCE_ID = "heatmap-bluetooth";
     private static final String HEATMAP_LAYER_ID = "heatmap-bl-layer";
     private static final String HEATMAP_LAYER_SOURCE = "heatmap-layer-source";
@@ -240,7 +240,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                 addHeatmapLayer(style);
 
                 // Arrow
-                //addArrowLayer(style);
+                addArrowLayer(style);
 
                 // Path setting
                 addLineLayer(style);
@@ -294,9 +294,9 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
         layer.setProperties(
 //                PropertyFactory.lineDasharray(new Float[] {0.01f, 2f}),
                 PropertyFactory.lineCap(Property.LINE_CAP_SQUARE),
-                PropertyFactory.lineJoin(Property.LINE_JOIN_ROUND),
+                PropertyFactory.lineJoin(Property.LINE_JOIN_BEVEL),
                 PropertyFactory.lineWidth(2f),
-                PropertyFactory.lineColor(Color.parseColor("#e55e5e"))
+                PropertyFactory.lineColor(Color.parseColor("#264dec"))
 //                PropertyFactory.linecol
         );
         loadedMapStyle.addLayer(layer);
@@ -355,7 +355,7 @@ public class MapBoxActivity extends AppCompatActivity implements OnMapReadyCallb
                         interpolate(
                                 linear(), zoom(),
                                 stop(0, 1),
-                                stop(25, 1)
+                                stop(25, 0.6)
                         )
                 )
         );
